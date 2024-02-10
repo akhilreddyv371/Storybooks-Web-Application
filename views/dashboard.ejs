@@ -1,0 +1,39 @@
+<% layout('layouts/main') %>
+<h6>Dashboard</h6>
+<h1><%= name %></h1>
+<p>Here are your stories</p>
+<% if (stories.length) {%>
+    <table class="striped">
+        <thead>
+            <tr>
+                <td>Title</td>
+                <td>Date</td>
+                <td>status</td>
+            </tr>
+        </thead>
+        <tbody>
+            <% stories.forEach((story) => {%>
+                <tr>
+                    <td><a href="/stories/<%=story._id%>"><%=story.title%></a></td>
+                    <td><%=formatDate(story.createdAt, 'MMMM Do YYYY, h:mm:ss') %></td>
+                    <td><span class="dash-status"><%= story.status %></span></td>
+                    <td>
+                        <div>
+                            <a href="/stories/edit/<%= story._id%>" class="btn btn-float">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <form action="/<%= story._id %>?_method=DELETE" method="post">
+                                <button class="btn red" type="submit"><i class="fas fa-trash"></i></button>
+                            </form>
+
+                        </div>
+
+                    </td>
+                </tr>
+                <%}) %>
+        </tbody>
+    </table>
+<%} else {%>
+    <p> dont have a story</p>
+    <%}
+%>
